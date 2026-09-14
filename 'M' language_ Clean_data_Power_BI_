@@ -1,0 +1,30 @@
+# M languase is used to claen data for text manipulation by following code
+
+#phone number was in different format
+
+if Text.StartsWith([new_phone],"+88")
+then Text.Range([new_phone],3)
+
+else 
+
+if Text.StartsWith([new_phone],"88")
+then Text.Range([new_phone],2)
+
+else 
+
+if Text.Length([new_phone]) > 11
+then Text.Start([new_phone],Text.Length([new_phone])-2)
+
+else 
+
+if Text.Length([new_phone]) < 11
+then Text.PadEnd([new_phone],11,"0")
+
+else 
+[new_phone]
+
+
+# # M languase is used to claen data for date manipulation by following code
+## Explanation: Date data locale is not same. dd-mm-yy needs modification. there were mixed date format like mm-dd-yy
+
+try[bd] otherwise [us]
