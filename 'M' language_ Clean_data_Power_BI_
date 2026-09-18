@@ -1,5 +1,8 @@
 # M languase is used to claen data for text manipulation by following code
 
+Operation 1: 
+
+
 #phone number was in different format
 
 if Text.StartsWith([new_phone],"+88")
@@ -26,5 +29,8 @@ else
 
 # # M languase is used to claen data for date manipulation by following code
 ## Explanation: Date data locale is not same. dd-mm-yy needs modification. there were mixed date format like mm-dd-yy
+
+
+Operation 2: 
 
 try[bd] otherwise [us]
