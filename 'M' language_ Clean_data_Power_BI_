@@ -34,3 +34,20 @@ else
 Operation 2: 
 
 try[bd] otherwise [us]
+
+
+
+Operation 3: 
+
+# M languase is used to remove multiple irelavent character such '+', '_', '-'
+
+Text.Remove([phone_1],{"-","+"," ","_"})
+
+Operation 4: 
+
+# M languase is used for condition
+
+if Text.Length([Phone_2]) = 11
+then [Phone_2]
+
+else "Invalid"
