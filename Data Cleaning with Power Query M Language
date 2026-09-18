@@ -1,0 +1,174 @@
+Data Cleaning with Power Query M Language
+
+Power Query **M Language** was used to clean, standardize, and validate text and date data. The main focus was on handling inconsistent phone numbers, mixed date formats, irrelevant characters, and invalid values.
+
+---
+
+## Operation 1: Standardizing Phone Numbers
+
+### Problem
+
+Phone numbers were stored in different formats, including:
+
+* `+88XXXXXXXXXXX`
+* `88XXXXXXXXXXX`
+* Numbers longer than 11 digits
+* Numbers shorter than 11 digits
+* Standard 11-digit phone numbers
+
+### M Code
+
+```powerquery
+if Text.StartsWith([new_phone], "+88")
+then Text.Range([new_phone], 3)
+
+else if Text.StartsWith([new_phone], "88")
+then Text.Range([new_phone], 2)
+
+else if Text.Length([new_phone]) > 11
+then Text.Start([new_phone], Text.Length([new_phone]) - 2)
+
+else if Text.Length([new_phone]) < 11
+then Text.PadEnd([new_phone], 11, "0")
+
+else
+    [new_phone]
+```
+
+### What this does
+
+The code:
+
+1. Removes the `+88` country code when present.
+2. Removes `88` when it appears at the beginning.
+3. Handles phone numbers longer than 11 characters.
+4. Pads shorter numbers to 11 characters.
+5. Keeps already valid 11-digit numbers unchanged.
+
+**Goal:** Create a consistent phone-number format for further analysis.
+
+---
+
+##  Operation 2: Handling Mixed Date Formats
+
+### Problem
+
+The dataset contained dates using different regional formats, such as:
+
+* `dd-mm-yy`
+* `mm-dd-yy`
+
+This created problems when converting the data into a consistent date format.
+
+### M Code
+
+```powerquery
+try [bd] otherwise [us]
+```
+
+### What this does
+
+The `try ... otherwise` statement attempts to use the value from the `[bd]` column.
+
+If the conversion or operation fails, Power Query uses the value from the `[us]` column instead.
+
+**Goal:** Handle inconsistent date formats and prevent errors during data transformation.
+
+---
+
+##  Operation 3: Removing Irrelevant Characters
+
+### Problem
+
+Phone numbers contained unnecessary characters such as:
+
+* `-`
+* `+`
+* Spaces
+* `_`
+
+For example:
+
+```text
++880-1712_345 678
+```
+
+### M Code
+
+```powerquery
+Text.Remove([phone_1], {"-", "+", " ", "_"})
+```
+
+### What this does
+
+The code removes all specified unwanted characters from the phone number.
+
+Example:
+
+```text
++880-1712_345 678
+```
+
+becomes:
+
+```text
+8801712345678
+```
+
+**Goal:** Remove formatting characters and create clean text values.
+
+---
+
+## Operation 4: Validating Phone Numbers
+
+### Problem
+
+After cleaning, phone numbers needed to be checked to determine whether they contained exactly 11 digits.
+
+### M Code
+
+```powerquery
+if Text.Length([Phone_2]) = 11
+then [Phone_2]
+else "Invalid"
+```
+
+### What this does
+
+* If the phone number contains exactly **11 characters**, it is kept.
+* Otherwise, it is classified as **"Invalid"**.
+
+**Goal:** Identify invalid phone numbers before further analysis.
+
+---
+
+# Data Cleaning Workflow
+
+The overall process can be summarized as:
+
+```text
+Raw Data
+   ↓
+Remove Unwanted Characters
+   ↓
+Standardize Phone Numbers
+   ↓
+Handle Mixed Date Formats
+   ↓
+Validate Phone Numbers
+   ↓
+Clean & Consistent Dataset
+```
+
+## Tools Used
+
+* **Power BI**
+* **Power Query**
+* **M Language**
+* Data Cleaning & Transformation
+* Text Manipulation
+* Data Validation
+
+##  Key Learning
+
+This exercise demonstrates how **Power Query M Language** can be used to automate repetitive data-cleaning tasks, handle inconsistent real-world data, and prepare datasets for analysis and visualization.
