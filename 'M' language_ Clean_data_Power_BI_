@@ -51,3 +51,27 @@ if Text.Length([Phone_2]) = 11
 then [Phone_2]
 
 else "Invalid"
+
+
+M languase is used to placed text based on condition
+
+Operation 5: 
+
+if Text.EndsWith([Email],"@example")
+then ([Email]&".com")
+
+else [Email]
+
+
+Operation 5(a): 
+
+if Text.EndsWith([Email],".com")
+then [Email]
+
+else 
+
+Text.BeforeDelimiter([Email],"@"&"example.com")
+
+
+
+
